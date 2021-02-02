@@ -1,19 +1,18 @@
 import os
-from pathlib import Path
 
 
 def extract_files(directory):
-    return [el for el in directory if "." in el]
+    return [el for el in directory if os.path.isfile(el)]
 
 
 def file_extensions(files):
-    ext = {}
+    report = {}
     for file in files:
         file_name, extension = os.path.splitext(file)
-        if extension not in ext:
-            ext[extension] = []
-        ext[extension].append(file_name)
-    return ext
+        if extension not in report:
+            report[extension] = []
+        report[extension].append(file_name)
+    return report
 
 
 dir_content = os.listdir()
@@ -28,9 +27,7 @@ for extension, file_names in sorted(report_info.items(), key=lambda x: x[0]):
     for name in file_names:
         result += f"- - - {name}{extension}\n"
 
+path_to_desktop = os.path.join(os.environ['USERPROFILE'], 'Desktop', "report.txt")
 
-home = str(Path.home())
-path = os.path.join(home, "report.txt")
-
-with open(os.path.expanduser(path), "w") as file:
+with open(path_to_desktop, "w") as file:
     file.write(result)
