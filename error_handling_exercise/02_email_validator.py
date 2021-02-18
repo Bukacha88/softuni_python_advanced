@@ -36,4 +36,3 @@ while True:
     if is_valid:
         print('Email is valid')
 
-    line = input()
