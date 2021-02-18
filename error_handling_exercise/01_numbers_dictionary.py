@@ -1,39 +1,31 @@
-class MustContainAtSymbolError(Exception):
-    pass
+numbers_dictionary = {}
 
-
-class NameTooShortError(Exception):
-    pass
-
-
-class InvalidDomainError(Exception):
-    pass
-
-
-domain_list = ['.com', '.bg', '.org', '.net']
-is_valid = True
-while True:
+line = input()
+while not line == "Search":
+    try:
+        number_as_string = line
+        number = int(input())
+        numbers_dictionary[number_as_string] = number
+    except ValueError:
+        print(f'The variable number must be an integer')
     line = input()
-    if line == 'End':
-        break
 
-    if '@' not in line:
-        is_valid = False
-        raise MustContainAtSymbolError('Email must contain @')
-    else:
-        name, rest = line.split('@')
-        server, domain = rest.split('.')
-        domain = '.' + domain
-
-    if len(name) < 5:
-        is_valid = False
-        raise NameTooShortError('Name must be more than 4 characters')
-
-    if domain not in domain_list:
-        is_valid = False
-        raise InvalidDomainError('Domain must be one of the following: .com, .bg, .org, .net')
-
-    if is_valid:
-        print('Email is valid')
-
+line = input()
+while not line == "Remove":
+    try:
+        searched = line
+        print(numbers_dictionary[searched])
+    except KeyError:
+        print('Number does not exist in dictionary')
     line = input()
+
+line = input()
+while not line == "End":
+    try:
+        searched = line
+        del numbers_dictionary[searched]
+    except KeyError:
+        print(f'Number does not exist in dictionary')
+    line = input()
+
+print(numbers_dictionary)
